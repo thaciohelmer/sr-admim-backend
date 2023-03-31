@@ -2,19 +2,16 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategoriesModule } from './categories/categories.module';
 
-const uri = 'mongodb://thaciohelmer:thaciohelmer123@localhost:27017'
+const uri = 'mongodb://thaciohelmer:thaciohelmer123@localhost:27017';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      uri,
-      {
-        dbName: 'sr_adm_backend'
-      }
-    ),
+    MongooseModule.forRoot(uri, {
+      dbName: 'sr_adm_backend',
+    }),
     CategoriesModule,
   ],
   controllers: [],
-  providers: []
+  providers: [],
 })
-export class AppModule { }
+export class AppModule {}
