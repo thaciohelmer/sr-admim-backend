@@ -34,6 +34,14 @@ export class CategoriesService {
     }
   }
 
+  async getByName(categoryName: string): Promise<Category> {
+    try {
+      return await this.categoryModel.findOne({ category: categoryName })
+    } catch (error) {
+      throw new RpcException(error.message)
+    }
+  }
+
   async update(id: string, category: Category): Promise<void> {
     try {
       await this.categoryModel.findOneAndUpdate({ _id: id }, { $set: category })

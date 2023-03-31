@@ -30,7 +30,7 @@ export class CategoriesController {
   }
 
   @MessagePattern('get-categories')
-  async getCategoryById(@Payload() id: string, @Ctx() context: RmqContext) {
+  async getCategoryById(@Payload() id: string, @Ctx() context: RmqContext): Promise<any> {
     const channel = context.getChannelRef()
     const originalMessage = context.getMessage()
     try {
@@ -39,6 +39,17 @@ export class CategoriesController {
       } else {
         return await this.categoryServices.getAll()
       }
+    } finally {
+      await channel.ack(originalMessage)
+    }
+  }
+
+  @MessagePattern('get-category-by-name')
+  async getCategoryByName(@Payload() categoryName: string, @Ctx() context: RmqContext): Promise<Category> {
+    const channel = context.getChannelRef()
+    const originalMessage = context.getMessage()
+    try {
+      return await this.categoryServices.getByName(categoryName)
     } finally {
       await channel.ack(originalMessage)
     }
