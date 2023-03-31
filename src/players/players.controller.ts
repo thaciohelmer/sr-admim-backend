@@ -16,7 +16,6 @@ export class PlayersController {
     const channel = context.getChannelRef()
     const originalMsg = context.getMessage()
     try {
-      this.logger.log(`player: ${JSON.stringify(player)}`)
       await this.playeresService.create(player)
       await channel.ack(originalMsg)
     } catch (error) {
@@ -31,19 +30,28 @@ export class PlayersController {
   }
 
   @MessagePattern('get-players')
-  async consultarPlayeres(@Payload() id: string, @Ctx() context: RmqContext) {
+  async getPlayers(@Ctx() context: RmqContext) {
     const channel = context.getChannelRef()
     const originalMsg = context.getMessage()
     try {
-      if (id) {
-        return await this.playeresService.getById(id);
-      } else {
-        return await this.playeresService.getAll();
-      }
+      return await this.playeresService.getAll();
     } finally {
       await channel.ack(originalMsg)
     }
   }
+
+  @MessagePattern('get-player-by-id')
+  async consultarPlayeres(@Payload() id: string, @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef()
+    const originalMsg = context.getMessage()
+    try {
+      return await this.playeresService.getById(id);
+    } finally {
+      await channel.ack(originalMsg)
+    }
+  }
+
+
 
   @EventPattern('update-player')
   async atualizarPlayer(@Payload() data: any, @Ctx() context: RmqContext) {
