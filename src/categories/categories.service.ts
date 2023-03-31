@@ -6,48 +6,51 @@ import { Category } from './interfaces/category.interface';
 
 @Injectable()
 export class CategoriesService {
-
-  constructor(@InjectModel('Category') private readonly categoryModel: Model<Category>) { }
+  constructor(
+    @InjectModel('Category') private readonly categoryModel: Model<Category>,
+  ) {}
 
   async create(category: Category): Promise<void> {
     try {
-      const createdCategory = new this.categoryModel(category)
-      await createdCategory.save()
+      const createdCategory = new this.categoryModel(category);
+      await createdCategory.save();
     } catch (error) {
-      throw new RpcException(error.message)
+      throw new RpcException(error.message);
     }
   }
 
   async getAll(): Promise<Array<Category>> {
     try {
-      return await this.categoryModel.find()
+      return await this.categoryModel.find();
     } catch (error) {
-      throw new RpcException(error.message)
+      throw new RpcException(error.message);
     }
   }
 
   async getById(id: string): Promise<Category> {
     try {
-      return await this.categoryModel.findById(id)
+      return await this.categoryModel.findById(id);
     } catch (error) {
-      throw new RpcException(error.message)
+      throw new RpcException(error.message);
     }
   }
 
   async getByName(categoryName: string): Promise<Category> {
     try {
-      return await this.categoryModel.findOne({ category: categoryName })
+      return await this.categoryModel.findOne({ category: categoryName });
     } catch (error) {
-      throw new RpcException(error.message)
+      throw new RpcException(error.message);
     }
   }
 
   async update(id: string, category: Category): Promise<void> {
     try {
-      await this.categoryModel.findOneAndUpdate({ _id: id }, { $set: category })
+      await this.categoryModel.findOneAndUpdate(
+        { _id: id },
+        { $set: category },
+      );
     } catch (error) {
-      throw new RpcException(error.message)
+      throw new RpcException(error.message);
     }
   }
-
 }
