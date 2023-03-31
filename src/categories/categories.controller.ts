@@ -21,7 +21,7 @@ export class CategoriesController {
       await this.categoryServices.create(category)
       await channel.ack(originalMessage)
     } catch (error) {
-      this.logger.error('error: ' + error.message)
+      this.logger.error(`Error: ${error.message}`)
       const verifyMessage = ackErrors.filter(err => error.message.includes(err))
       if (verifyMessage) {
         await channel.ack(originalMessage)
@@ -66,7 +66,7 @@ export class CategoriesController {
       await this.categoryServices.update(payload.id, payload.category)
       await channel.ack(originalMessage)
     } catch (error) {
-      this.logger.error('error: ' + error.message)
+      this.logger.error(`Error: ${error.message}`)
       const verifyMessage = ackErrors.filter(err => error.message.includes(err))
       if (verifyMessage) {
         await channel.ack(originalMessage)

@@ -50,7 +50,6 @@ export class PlayersController {
     const channel = context.getChannelRef()
     const originalMsg = context.getMessage()
     try {
-      console.log(`data: ${JSON.stringify(data)}`)
       const id: string = data.id
       const player: Player = data.player
       await this.playeresService.update(id, player)
