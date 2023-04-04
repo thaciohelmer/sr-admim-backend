@@ -12,7 +12,7 @@ export class PlayersController {
   constructor(private readonly playeresService: PlayersService) { }
 
   @EventPattern('create-player')
-  async create(@Payload() player: Player, @Ctx() context: RmqContext) {
+  async createPlayer(@Payload() player: Player, @Ctx() context: RmqContext) {
     const channel = context.getChannelRef()
     const originalMsg = context.getMessage()
     try {
@@ -30,7 +30,7 @@ export class PlayersController {
   }
 
   @MessagePattern('get-players')
-  async getPlayers(@Ctx() context: RmqContext) {
+  async getAllPlayers(@Ctx() context: RmqContext) {
     const channel = context.getChannelRef()
     const originalMsg = context.getMessage()
     try {
@@ -41,7 +41,7 @@ export class PlayersController {
   }
 
   @MessagePattern('get-player-by-id')
-  async consultarPlayeres(@Payload() id: string, @Ctx() context: RmqContext) {
+  async getPlayerById(@Payload() id: string, @Ctx() context: RmqContext) {
     const channel = context.getChannelRef()
     const originalMsg = context.getMessage()
     try {
